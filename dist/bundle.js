@@ -71,12 +71,8 @@
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Trie_js__ = __webpack_require__(1);
 
-// import Node from './Node.js'
 
 const userInput = document.getElementById('word-input');
-const button = document.getElementById('suggest-btn');
-// let wordBtn = document.querySelector('.btn')
-
 const searchTrie = new __WEBPACK_IMPORTED_MODULE_0__Trie_js__["a" /* default */]()
 
 $(document).ready(populateDictionary)
@@ -99,7 +95,6 @@ function filterList() {
 
   for (let i = 0; i < 10 && suggestions.length; i++) {
     if (suggestions[i] !== undefined) {
-
       $('aside').append(`<button class="btn" id="Date.now()">${suggestions[i]}</button>`)
     }
   }
@@ -107,12 +102,13 @@ function filterList() {
 
 function selection(e) {
   let selected = e.target.innerHTML
+
   searchTrie.select(selected);
   filterList();
 }
 
 function clearInput() {
-  if($('#word-input').val() === '') {
+  if ($('#word-input').val() === '') {
     $('.btn').remove()
   } else {
     filterList()
@@ -170,12 +166,13 @@ class Trie {
     let suggestionsArray = [];
 
     for (let i = 0; i < prefixArray.length; i++) {
-      currentNode = currentNode.children[prefixArray[i]]
+      if (currentNode) {
+        currentNode = currentNode.children[prefixArray[i]]
+      }
     }//currentNode now refers to the last leter in our word
 
     const traverseTheTrie = (prefix, currentNode) => {
       let childLetters = Object.keys(currentNode.children);
-
 
       childLetters.forEach( letter => {
         const child = currentNode.children[letter];
@@ -186,15 +183,6 @@ class Trie {
         }
         traverseTheTrie(newString, child)
       })
-
-      // for (let k = 0; k < keys.length; k++) {
-      //   let child = currentNode.children[keys[k]];
-      //   let newString = prefix + child.letter;
-      //   if (child.isWord) {
-      //     suggestionsArray.push({word: newString, frequency: child.frequency, lastTouched: child.lastTouched});
-      //   }
-      //   traverseTheTrie(newString, child)
-      // }
     };
 
     if (currentNode && currentNode.isWord) {

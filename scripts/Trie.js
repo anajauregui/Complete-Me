@@ -40,8 +40,10 @@ export default class Trie {
     let suggestionsArray = [];
 
     for (let i = 0; i < prefixArray.length; i++) {
-      currentNode = currentNode.children[prefixArray[i]]
-    }//currentNode now refers to the last leter in our word
+      if (currentNode) {
+        currentNode = currentNode.children[prefixArray[i]]
+      }
+    }
 
     const traverseTheTrie = (prefix, currentNode) => {
       let childLetters = Object.keys(currentNode.children);
