@@ -39,11 +39,11 @@ export default class Trie {
     let prefixArray = [...prefix];
     let suggestionsArray = [];
 
-    for (let i = 0; i < prefixArray.length; i++) {
+    prefixArray.forEach( letter => {
       if (currentNode) {
-        currentNode = currentNode.children[prefixArray[i]]
+        currentNode = currentNode.children[letter]
       }
-    }
+    })
 
     const traverseTheTrie = (prefix, currentNode) => {
       let childLetters = Object.keys(currentNode.children);
@@ -80,9 +80,10 @@ export default class Trie {
     let wordsArray = [...word];
     let currentNode = this.root;
 
-    for (let i = 0; i < wordsArray.length; i++) {
-      currentNode = currentNode.children[wordsArray[i]]
-    }
+    wordsArray.forEach( word => {
+      currentNode = currentNode.children[word]
+    })
+
     currentNode.frequency++
     currentNode.lastTouched = Date.now();
   }
